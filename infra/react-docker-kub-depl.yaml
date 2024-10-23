@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-docker-kub
+spec:
+  selector:
+    matchLabels:
+      app: react-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+      - name: react-app
+        image: ahmedtriki/react-docker-kub
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-react-app-srv
+spec:
+  type: NodePort
+  selector:
+    app: react-app
+  ports:
+  - name: my-app
+    port: 3000
+    targetPort: 3000
